@@ -11,13 +11,20 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE TABLE categories (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(30) NOT NULL,
+  icon CHAR(1)
+);
+
 CREATE TABLE products (
   id SERIAL PRIMARY KEY,
   name VARCHAR(50) NOT NULL,
   description TEXT NOT NULL,
   price NUMERIC(6, 2) NOT NULL,
-  stock INTEGER NOT NULL,
-  product_date TIMESTAMP NOT NULL DEFAULT NOW()
+  quantity INTEGER NOT NULL,
+  product_date TIMESTAMP NOT NULL DEFAULT NOW(),
+  category_id INTEGER REFERENCES categories(id) ON DELETE SET NULL
 );
 
 CREATE TABLE reviews (
